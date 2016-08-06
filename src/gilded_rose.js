@@ -4,10 +4,12 @@ function Item(name, sell_in, quality) {
   this.quality = quality;
 }
 
-var items = [];
+var items = []; 
 
 function update_quality() {
   for (var i = 0; i < items.length; i++) {
+		// if item name is not Aged Brie & Item is not a Backstage Pass to a ... concert
+		// These items increases in quality as the sell_in date increases
     if (items[i].name != 'Aged Brie' && items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
       if (items[i].quality > 0) {
         if (items[i].name != 'Sulfuras, Hand of Ragnaros') {

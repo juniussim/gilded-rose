@@ -69,35 +69,26 @@ function update_quality(items) {
 				item.sell_in -= 1;
 				break;
 			case "Conjured":
-				if (item.sell_in <= 0 && item.quality > 0) {
-					item.quality -= 4;
-				// else if the quality is greater than 0
-				} else if (item.quality > 0) {
-					item.quality -= 2;
-				}
+				update_normal(2);
 				item.sell_in -= 1;
 				break;
 			default:
 				// if today the product is supposed to be sold but it is not and the quality is greater than 0
-				if (item.sell_in <= 0 && item.quality > 0) {
-					item.quality -= 2;
-				// else if the quality is greater than 0
-				} else if (item.quality > 0) {
-					item.quality -= 1;
-				}
+				update_normal();
 				item.sell_in -= 1;
+		}
+		
+		function update_normal(times){
+			times = times || 1;
+			if (item.sell_in <= 0 && item.quality > 0) {
+				item.quality -= times * 2;
+			// else if the quality is greater than 0
+			} else if (item.quality > 0) {
+				item.quality -= times;
+			}
 		}
 	}
 
-	function update_normal(times){
-		times = times || 1;
-		if (item.sell_in <= 0 && item.quality > 0) {
-			item.quality -= times * 2;
-		// else if the quality is greater than 0
-		} else if (item.quality > 0) {
-			item.quality -= times;
-		}
-	}
 }
 
 

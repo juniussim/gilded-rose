@@ -25,7 +25,7 @@ function update_quality(items) {
 			if (items[i].quality > 0) {
 				// !with the exception of Sulfuras which quality never decreases
         if (items[i].name != 'Sulfuras, Hand of Ragnaros') {
-          items[i].quality -= 1; // Shorten the code
+          items[i].quality -= 1;
         }
       }
     } else {
@@ -33,19 +33,19 @@ function update_quality(items) {
 			// This ensure that quality would not be increase further than 50, if its 50, we just leave it as 50
       if (items[i].quality < 50) {
 				// * we would increase the quality
-        items[i].quality += 1; // Shorten the code
+        items[i].quality += 1;
 				// if it is a concert backstage pass, we would have additional conditions
         if (items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
           if (items[i].sell_in < 11) {
 						// checking for quality not already being further than 50 before we increase it as quality could be greater than 50 after the first condition
 						// !we can probably do some refactoring here, like maybe just reduce quality by 2 or 3 depending on the range
 						if (items[i].quality < 50) {
-              items[i].quality += 1; // Shorten the code
+              items[i].quality += 1;
             }
           }
           if (items[i].sell_in < 6) {
             if (items[i].quality < 50) {
-              items[i].quality += 1; // Shorten the code
+              items[i].quality += 1;
             }
           }
         }
@@ -54,7 +54,7 @@ function update_quality(items) {
 		// If item is not sulfuras (the last category of item)
 		//* For all item categories except for sulfuras, we would reduce the sell_in date
     if (items[i].name != 'Sulfuras, Hand of Ragnaros') {
-      items[i].sell_in -= 1; // Shorten the code
+      items[i].sell_in -= 1;
     }
 
 		//* For all items categories with sell_in date less than 0
@@ -67,13 +67,13 @@ function update_quality(items) {
 					if (items[i].quality > 0) {
 						//* normal items whose quality is above 0
             if (items[i].name != 'Sulfuras, Hand of Ragnaros') {
-              items[i].quality -= 1; // Shorten the code
+              items[i].quality -= 1;
             }
 						//* Do nothing for Sulfuras
           }
 				//* When sell_in is negative, set Backstage Passes quality to zero
         } else {
-          items[i].quality = 0; // Shorten the code
+          items[i].quality = 0; 
         }
 				//* when sell_in date for Aged brie is negative, as long as quality not above 0, increase the quality
       } else {

@@ -41,52 +41,66 @@ function Item(name, sell_in, quality) {
 }
 
 function update_quality(items) {
-  for (var i = 0; i < items.length; i++) {
-		switch (items[i].name) {
+	items.forEach(update_inventory);
+
+	function update_inventory(item){
+		switch (item.name) {
 			case "Sulfuras, Hand of Ragnaros":
 				break;
 			case "Aged Brie":
-				if (items[i].quality < 50) {
-					items[i].quality += 1;
+				if (item.quality < 50) {
+					item.quality += 1;
 				}
-				items[i].sell_in -= 1;
+				item.sell_in -= 1;
 				break;
 			case "Backstage passes to a TAFKAL80ETC concert":
-				if (items[i].quality < 50) {
-					items[i].quality += 1;
-					if (items[i].sell_in < 11 && items[i].quality < 50) {
-						items[i].quality += 1;
+				if (item.quality < 50) {
+					item.quality += 1;
+					if (item.sell_in < 11 && item.quality < 50) {
+						item.quality += 1;
 					}
-					if (items[i].sell_in < 6 && items[i].quality < 50) {
-            items[i].quality += 1;
-          }
+					if (item.sell_in < 6 && item.quality < 50) {
+						item.quality += 1;
+					}
 				}
-				if (items[i].sell_in <= 0) {
-					items[i].quality = 0;
+				if (item.sell_in <= 0) {
+					item.quality = 0;
 				}
-				items[i].sell_in -= 1;
+				item.sell_in -= 1;
 				break;
 			case "Conjured":
-				if (items[i].sell_in <= 0 && items[i].quality > 0) {
-					items[i].quality -= 4;
+				if (item.sell_in <= 0 && item.quality > 0) {
+					item.quality -= 4;
 				// else if the quality is greater than 0
-				} else if (items[i].quality > 0) {
-					items[i].quality -= 2;
+				} else if (item.quality > 0) {
+					item.quality -= 2;
 				}
-				items[i].sell_in -= 1;
+				item.sell_in -= 1;
 				break;
 			default:
 				// if today the product is supposed to be sold but it is not and the quality is greater than 0
-				if (items[i].sell_in <= 0 && items[i].quality > 0) {
-					items[i].quality -= 2;
+				if (item.sell_in <= 0 && item.quality > 0) {
+					item.quality -= 2;
 				// else if the quality is greater than 0
-				} else if (items[i].quality > 0) {
-					items[i].quality -= 1;
+				} else if (item.quality > 0) {
+					item.quality -= 1;
 				}
-				items[i].sell_in -= 1;
+				item.sell_in -= 1;
+		}
+	}
+
+	function update_normal(times){
+		times = times || 1;
+		if (item.sell_in <= 0 && item.quality > 0) {
+			item.quality -= times * 2;
+		// else if the quality is greater than 0
+		} else if (item.quality > 0) {
+			item.quality -= times;
 		}
 	}
 }
+
+
 
 module.exports = {
   Item: Item,

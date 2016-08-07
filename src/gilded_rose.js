@@ -4,9 +4,9 @@ function Item(name, sell_in, quality) {
   this.quality = quality;
 }
 
-var items = []; 
+// var items = [];
 
-function update_quality() {
+function update_quality(items) {
   for (var i = 0; i < items.length; i++) {
 		// if item name is not Aged Brie & Item is not a Backstage Pass to a ... concert
 		// These items increases in quality as the sell_in date increases
@@ -58,6 +58,6 @@ function update_quality() {
 
 module.exports = {
   Item: Item,
-	items: items,
+	// items: items,
   update_quality: update_quality,
 };

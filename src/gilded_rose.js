@@ -46,6 +46,9 @@ function update_quality(items) {
 
 	// Function declarations
 	function update_inventory(item){
+		var MAX_QUALITY = 50;
+		var MIN_QUALITY = 0;
+
 		switch (item.name) {
 			case "Sulfuras, Hand of Ragnaros":
 				break;
@@ -78,17 +81,17 @@ function update_quality(items) {
 
 		// Further function declarations (closure)
 		function increase_quality(){
-			if (item.quality < 50) {
+			if (item.quality < MAX_QUALITY) {
 				item.quality += 1;
 			}
 		}
 
 		function decrease_quality(times){
 			times = times || 1;
-			if (item.sell_in <= 0 && item.quality > 0) {
-				item.quality -= times * 2;
-			// else if the quality is greater than 0
-			} else if (item.quality > 0) {
+			if (item.quality > MIN_QUALITY) {
+				item.quality -= times;
+			}
+			if (item.sell_in <= 0 && item.quality > MIN_QUALITY) {
 				item.quality -= times;
 			}
 		}

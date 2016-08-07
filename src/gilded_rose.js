@@ -51,7 +51,7 @@ function update_quality(items) {
 				if (item.quality < 50) {
 					item.quality += 1;
 				}
-				item.sell_in -= 1;
+				update_sell_in();
 				break;
 			case "Backstage passes to a TAFKAL80ETC concert":
 				if (item.quality < 50) {
@@ -66,18 +66,17 @@ function update_quality(items) {
 				if (item.sell_in <= 0) {
 					item.quality = 0;
 				}
-				item.sell_in -= 1;
+				update_sell_in();
 				break;
 			case "Conjured":
 				update_normal(2);
-				item.sell_in -= 1;
+				update_sell_in();
 				break;
 			default:
-				// if today the product is supposed to be sold but it is not and the quality is greater than 0
 				update_normal();
-				item.sell_in -= 1;
+				update_sell_in();
 		}
-		
+
 		function update_normal(times){
 			times = times || 1;
 			if (item.sell_in <= 0 && item.quality > 0) {
@@ -86,6 +85,10 @@ function update_quality(items) {
 			} else if (item.quality > 0) {
 				item.quality -= times;
 			}
+		}
+
+		function update_sell_in(){
+			item.sell_in -= 1;
 		}
 	}
 

@@ -57,6 +57,7 @@ function update_quality(items) {
       items[i].sell_in -= 1;
     } // Sulfuras sell_in date does not decrease then it shouldn't allowed to be negative
 
+
 		//* For all items categories with sell_in date less than 0
     if (items[i].sell_in < 0) {
 			// Only Normal items, Backstage passes and Sulfuras
@@ -84,9 +85,6 @@ function update_quality(items) {
     }
   }
 }
-
-// Seperate update quality and update sell_in date functions
-// Update quality would call update sell_in date function
 
 module.exports = {
   Item: Item,

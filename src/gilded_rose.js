@@ -67,6 +67,7 @@ function update_quality(items) {
 				update_sell_in();
 				break;
 			case "Conjured":
+				// decrease quality by double the normal rate
 				decrease_quality(2);
 				update_sell_in();
 				break;
@@ -75,6 +76,7 @@ function update_quality(items) {
 				update_sell_in();
 		}
 
+		// Further function declarations (closure)
 		function increase_quality(){
 			if (item.quality < 50) {
 				item.quality += 1;

@@ -41,27 +41,25 @@ function Item(name, sell_in, quality) {
 }
 
 function update_quality(items) {
+	// Function execution
 	items.forEach(update_inventory);
 
+	// Function declarations
 	function update_inventory(item){
 		switch (item.name) {
 			case "Sulfuras, Hand of Ragnaros":
 				break;
 			case "Aged Brie":
-				if (item.quality < 50) {
-					item.quality += 1;
-				}
+				increase_quality();
 				update_sell_in();
 				break;
 			case "Backstage passes to a TAFKAL80ETC concert":
-				if (item.quality < 50) {
-					item.quality += 1;
-					if (item.sell_in < 11 && item.quality < 50) {
-						item.quality += 1;
-					}
-					if (item.sell_in < 6 && item.quality < 50) {
-						item.quality += 1;
-					}
+				increase_quality();
+				if (item.sell_in < 11) {
+					increase_quality();
+				}
+				if (item.sell_in < 6 ) {
+					increase_quality();
 				}
 				if (item.sell_in <= 0) {
 					item.quality = 0;
@@ -69,15 +67,21 @@ function update_quality(items) {
 				update_sell_in();
 				break;
 			case "Conjured":
-				update_normal(2);
+				decrease_quality(2);
 				update_sell_in();
 				break;
 			default:
-				update_normal();
+				decrease_quality();
 				update_sell_in();
 		}
 
-		function update_normal(times){
+		function increase_quality(){
+			if (item.quality < 50) {
+				item.quality += 1;
+			}
+		}
+
+		function decrease_quality(times){
 			times = times || 1;
 			if (item.sell_in <= 0 && item.quality > 0) {
 				item.quality -= times * 2;

@@ -55,7 +55,7 @@ function update_quality(items) {
 		//* For all item categories except for sulfuras, we would reduce the sell_in date
     if (items[i].name != 'Sulfuras, Hand of Ragnaros') {
       items[i].sell_in -= 1;
-    }
+    } // Sulfuras sell_in date does not decrease then it shouldn't allowed to be negative
 
 		//* For all items categories with sell_in date less than 0
     if (items[i].sell_in < 0) {
@@ -73,7 +73,7 @@ function update_quality(items) {
           }
 				//* When sell_in is negative, set Backstage Passes quality to zero
         } else {
-          items[i].quality = 0; 
+          items[i].quality = 0;
         }
 				//* when sell_in date for Aged brie is negative, as long as quality not above 0, increase the quality
       } else {
@@ -84,6 +84,9 @@ function update_quality(items) {
     }
   }
 }
+
+// Seperate update quality and update sell_in date functions
+// Update quality would call update sell_in date function
 
 module.exports = {
   Item: Item,

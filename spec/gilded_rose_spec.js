@@ -13,8 +13,8 @@ describe("Gilded Rose", function() {
 		items.push(new Item('Sulfuras, Hand of Ragnaros', 0, 80));
 		items.push(new Item('Sulfuras, Hand of Ragnaros', -1, 80));
 		items.push(new Item('Backstage passes to a TAFKAL80ETC concert', 15, 20));
-		// not necessary because test for the above backstage passes covers all 3 situations
-		// items.push(new Item('Backstage passes to a TAFKAL80ETC concert', 10, 49));
+		items.push(new Item('Backstage passes to a TAFKAL80ETC concert', 10, 49));
+		// not necessary because test for the above backstage passes covers the below situation
 		// items.push(new Item('Backstage passes to a TAFKAL80ETC concert', 5, 49));
 	});
 
@@ -163,5 +163,37 @@ describe("Gilded Rose", function() {
 		expect(items[5].sell_in).toEqual(-2);
 		expect(items[5].quality).toEqual(0);
 	});
+
+	// this test checks that back stage passes quality never exceeds 50
+	it("Update Quality function is working for Back Stage Passes", function() {
+		// Initial sell_in date and quality
+		expect(items[6].name).toEqual('Backstage passes to a TAFKAL80ETC concert');
+		expect(items[6].sell_in).toEqual(10);
+		expect(items[6].quality).toEqual(49);
+		// quality increases to 50 (which is the suppose maximum for any item)
+		// not sure why we allowed sulfuras to exceed 50
+		update_quality_times(1,items);
+		expect(items[6].sell_in).toEqual(9);
+		// supose to be 51 but because of maximum cap
+		expect(items[6].quality).toEqual(50);
+		// cap remains at 50
+		update_quality_times(4,items);
+		expect(items[6].sell_in).toEqual(5);
+		expect(items[6].quality).toEqual(50);
+		// quality increases at triple rate after 10 days 1:3
+		update_quality_times(1,items);
+		expect(items[6].sell_in).toEqual(4);
+		expect(items[6].quality).toEqual(50);
+		// sell_in date drecrease to 5
+		update_quality_times(4,items);
+		expect(items[6].sell_in).toEqual(0);
+		expect(items[6].quality).toEqual(50);
+		// quality drops to 0 after sell_in date passes
+		update_quality_times(1,items);
+		expect(items[6].sell_in).toEqual(-1);
+		expect(items[6].quality).toEqual(0);
+	});
+
+
 
 });

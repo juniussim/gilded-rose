@@ -1,9 +1,3 @@
-function Item(name, sell_in, quality) {
-  this.name = name;
-  this.sell_in = sell_in;
-  this.quality = quality;
-}
-
 // Types of items:
 // 1.Regular items
 // 2.Aged Brie
@@ -11,8 +5,6 @@ function Item(name, sell_in, quality) {
 // 4.Legendary item: Sulfuras
 
 /* Rules
-1. Quality for all items except Sulfuras cannot be negative or more than 50
-
 For Normal items
 - Quantity decreases 1:1
 - Once sell_in date is less than 0, quality decreases at double the speed
@@ -32,10 +24,13 @@ For Backstage Passes
 For Sulfuras
 - Quality does not change
 - Sell_in date does not change
-
 */
 
-// To get an overview, read the * comments
+function Item(name, sell_in, quality) {
+  this.name = name;
+  this.sell_in = sell_in;
+  this.quality = quality;
+}
 
 function update_quality(items) {
   for (var i = 0; i < items.length; i++) {
@@ -58,24 +53,20 @@ function update_quality(items) {
             items[i].quality += 1;
           }
 				}
-
-				items[i].sell_in -= 1;
-
-				if (items[i].sell_in < 0) {
+				if (items[i].sell_in <= 0) {
 					items[i].quality = 0;
 				}
-				
+				items[i].sell_in -= 1;
 				break;
 			default:
-				if (items[i].quality > 0) {
+				// if today the product is supposed to be sold but it is not and the quality is greater than 0
+				if (items[i].sell_in <= 0 && items[i].quality > 0) {
+					items[i].quality -= 2;
+				// else if the quality is greater than 0
+				} else if (items[i].quality > 0) {
 					items[i].quality -= 1;
 				}
 				items[i].sell_in -= 1;
-				if (items[i].sell_in < 0) {
-					if (items[i].quality > 0) {
-						items[i].quality -= 1;
-					}
-				}
 		}
 	}
 }

@@ -26,6 +26,14 @@ For Sulfuras
 - Sell_in date does not change
 */
 
+/*
+Add in new category: conjured item
+- "Conjured" items degrade in Quality twice as fast as normal items
+- Quantity decreases 1:1
+- Once sell_in date is less than 0, quality decreases at double the speed
+- Quality cannot be negative (& cannot exceed 50, however no current tests test for that)
+*/
+
 function Item(name, sell_in, quality) {
   this.name = name;
   this.sell_in = sell_in;
@@ -55,6 +63,15 @@ function update_quality(items) {
 				}
 				if (items[i].sell_in <= 0) {
 					items[i].quality = 0;
+				}
+				items[i].sell_in -= 1;
+				break;
+			case "Conjured":
+				if (items[i].sell_in <= 0 && items[i].quality > 0) {
+					items[i].quality -= 4;
+				// else if the quality is greater than 0
+				} else if (items[i].quality > 0) {
+					items[i].quality -= 2;
 				}
 				items[i].sell_in -= 1;
 				break;

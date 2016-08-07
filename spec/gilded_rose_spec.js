@@ -16,6 +16,7 @@ describe("Gilded Rose", function() {
 		items.push(new Item('Backstage passes to a TAFKAL80ETC concert', 10, 49));
 		// not necessary because test for the above backstage passes covers the below situation
 		// items.push(new Item('Backstage passes to a TAFKAL80ETC concert', 5, 49));
+		items.push(new Item('Conjured',10,24));
 	});
 
 	afterEach(function(){
@@ -194,6 +195,27 @@ describe("Gilded Rose", function() {
 		expect(items[6].quality).toEqual(0);
 	});
 
-
+	it("Update Quality function is working for regular items", function() {
+		// Initial sell_in date and quality
+		expect(items[7].name).toEqual("Conjured");
+		expect(items[7].sell_in).toEqual(10);
+		expect(items[7].quality).toEqual(24);
+		// quality reduced at double the rate of the sell_in date 1:2
+		update_quality_times(1,items);
+		expect(items[7].sell_in).toEqual(9);
+		expect(items[7].quality).toEqual(22);
+		// sell_in date is reduced to 0
+		update_quality_times(9,items);
+		expect(items[7].sell_in).toEqual(0);
+		expect(items[7].quality).toEqual(4);
+		// quality reduced at double the rate since sell_in date is 0 now 1:4
+		update_quality_times(1,items);
+		expect(items[7].sell_in).toEqual(-1);
+		expect(items[7].quality).toEqual(0);
+		// quality of an item is never negative
+		update_quality_times(3,items);
+		expect(items[7].sell_in).toEqual(-4);
+		expect(items[7].quality).toEqual(0);
+	});
 
 });

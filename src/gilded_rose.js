@@ -33,6 +33,8 @@ Add in new category: conjured item
 - Once sell_in date is less than 0, quality decreases at double the speed
 - Quality cannot be negative (& cannot exceed 50, however no current tests test for that)
 */
+var MAX_QUALITY = 50;
+var MIN_QUALITY = 0;
 
 function Item(name, sell_in, quality) {
   this.name = name;
@@ -47,8 +49,6 @@ function update_quality(items) {
 
 // Callback declaration
 function update_item_quality(item){
-	var MAX_QUALITY = 50;
-	var MIN_QUALITY = 0;
 
 	switch (item.name) {
 		case "Sulfuras, Hand of Ragnaros":
@@ -109,8 +109,6 @@ function update_item_quality(item){
 		item.sell_in -= 1;
 	}
 }
-
-
 
 module.exports = {
   Item: Item,

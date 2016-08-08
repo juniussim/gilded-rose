@@ -103,13 +103,6 @@ function update_item_quality(item){
 		}
 		//set the new dec val, but min 0
     item.quality = item.quality > 0 ? item.quality : MIN_QUALITY;
-		// Old codes
-		// if (item.quality > MIN_QUALITY) {
-		// 	item.quality -= unit;
-		// }
-		// if (item.sell_in <= 0 && item.quality > MIN_QUALITY) {
-		// 	item.quality -= unit;
-		// }
 	}
 
 	function update_sell_in(){

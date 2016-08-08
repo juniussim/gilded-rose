@@ -42,65 +42,79 @@ function Item(name, sell_in, quality) {
 
 function update_quality(items) {
 	// Function execution
-	items.forEach(update_inventory);
+	items.forEach(update_item_quality);
+}
 
-	// Function declarations
-	function update_inventory(item){
-		var MAX_QUALITY = 50;
-		var MIN_QUALITY = 0;
+// Callback declaration
+function update_item_quality(item){
+	var MAX_QUALITY = 50;
+	var MIN_QUALITY = 0;
 
-		switch (item.name) {
-			case "Sulfuras, Hand of Ragnaros":
-				break;
-			case "Aged Brie":
+	switch (item.name) {
+		case "Sulfuras, Hand of Ragnaros":
+			break;
+		case "Aged Brie":
+			increase_quality();
+			update_sell_in();
+			break;
+		case "Backstage passes to a TAFKAL80ETC concert":
+			if (item.sell_in <= 0) {
+				// quality drops to 0 after the concert
+				item.quality = 0;
+			}
+			else if (item.sell_in <= 5) {
+				// quality inc by 3 when there are 5 days or less
+				increase_quality(3);
+			}
+			else if (item.sell_in <= 10) {
+				// quality inc by 2 when there are 10 days or less
+				increase_quality(2);
+			}
+			else if (item.sell_in > 10){
+				// quality inc by 1 when sell_in > 10 days
 				increase_quality();
-				update_sell_in();
-				break;
-			case "Backstage passes to a TAFKAL80ETC concert":
-				increase_quality();
-				if (item.sell_in < 11) {
-					increase_quality();
-				}
-				if (item.sell_in < 6 ) {
-					increase_quality();
-				}
-				if (item.sell_in <= 0) {
-					item.quality = 0;
-				}
-				update_sell_in();
-				break;
-			case "Conjured":
-				// decrease quality by double the normal rate
-				decrease_quality(2);
-				update_sell_in();
-				break;
-			default:
-				decrease_quality();
-				update_sell_in();
-		}
-
-		// Further function declarations (closure)
-		function increase_quality(){
-			if (item.quality < MAX_QUALITY) {
-				item.quality += 1;
 			}
-		}
-
-		function decrease_quality(times){
-			times = times || 1;
-			if (item.quality > MIN_QUALITY) {
-				item.quality -= times;
-			}
-			if (item.sell_in <= 0 && item.quality > MIN_QUALITY) {
-				item.quality -= times;
-			}
-		}
-
-		function update_sell_in(){
-			item.sell_in -= 1;
-		}
+			update_sell_in();
+			break;
+		case "Conjured":
+			// decrease quality by double the normal rate
+			decrease_quality(2);
+			update_sell_in();
+			break;
+		default:
+			decrease_quality();
+			update_sell_in();
 	}
 
+	// Further function declarations (closure)
+	function increase_quality(unit){
+		unit = unit || 1;
+		item.quality += unit;
+		item.quality = item.quality < MAX_QUALITY ? item.quality : MAX_QUALITY;
+	}
+
+	function decrease_quality(unit){
+		unit = unit || 1;
+		if (item.sell_in <= 0) {
+			//decrease by twice if sell in is less than or eq to 0
+			item.quality -= unit * 2;
+		} else {
+			item.quality -= unit;
+		}
+		//set the new dec val, but min 0
+    item.quality = item.quality > 0 ? item.quality : MIN_QUALITY;
+		// Old codes
+		// if (item.quality > MIN_QUALITY) {
+		// 	item.quality -= unit;
+		// }
+		// if (item.sell_in <= 0 && item.quality > MIN_QUALITY) {
+		// 	item.quality -= unit;
+		// }
+	}
+
+	function update_sell_in(){
+		item.sell_in -= 1;
+	}
 }
 
 
